@@ -388,28 +388,127 @@
         }
 
         @media (max-width: 1024px) {
+            nav {
+                padding: 20px 25px;
+            }
+
+            .logo {
+                position: relative;
+                left: 0;
+                transform: none;
+                font-size: 16px;
+                letter-spacing: 4px;
+            }
+
+            .nav-left {
+                gap: 20px;
+            }
+
+            .nav-right {
+                gap: 15px;
+            }
+
+            .menu-icon, .search-icon {
+                font-size: 11px;
+            }
+
+            .nav-right span {
+                font-size: 16px;
+            }
+
+            .hero-content {
+                left: 25px;
+                bottom: 60px;
+            }
+
+            .hero-title {
+                font-size: 36px;
+            }
+
             .split-section {
                 grid-template-columns: 1fr;
                 height: auto;
             }
 
             .split-item {
-                height: 60vh;
+                height: 70vh;
+            }
+
+            .split-content {
+                left: 30px;
+                bottom: 40px;
+            }
+
+            .split-label {
+                font-size: 32px;
             }
 
             .product-grid {
                 grid-template-columns: 1fr;
             }
 
+            .product-item {
+                aspect-ratio: 4/5;
+            }
+
             .footer-content {
-                grid-template-columns: 1fr 1fr;
+                grid-template-columns: 1fr;
+                gap: 40px;
+                padding: 0 25px;
+            }
+
+            .footer-brand {
+                margin-bottom: 20px;
             }
 
             .feature-title {
                 font-size: 42px;
+                letter-spacing: 2px;
             }
 
-            .nav-left, .nav-right {
+            .feature-desc {
+                font-size: 12px;
+            }
+
+            footer {
+                padding: 60px 25px 30px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            nav {
+                flex-direction: column;
+                gap: 15px;
+                padding: 15px 20px;
+                align-items: flex-start;
+            }
+
+            .logo {
+                order: -1;
+                margin-bottom: 10px;
+            }
+
+            .nav-left {
+                order: 1;
+            }
+
+            .nav-right {
+                order: 2;
+                position: absolute;
+                top: 20px;
+                right: 20px;
+            }
+
+            .hero-title {
+                font-size: 28px;
+            }
+
+            .feature-title {
+                font-size: 32px;
+            }
+
+            .feature-cta {
+                padding: 15px 40px;
                 font-size: 11px;
             }
         }
