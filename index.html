@@ -66,18 +66,109 @@
             display: flex;
             gap: 25px;
             align-items: center;
+        }
+
+        .nav-right a {
+            cursor: pointer;
+            transition: opacity 0.3s;
+            text-decoration: none;
+            color: #fff;
+        }
+
+        .nav-right a:hover {
+            opacity: 0.6;
+        }
+
+        .contact-link {
             font-size: 13px;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
 
-        .nav-right span {
-            cursor: pointer;
-            transition: opacity 0.3s;
+        /* Icon styles */
+        .icon {
+            width: 20px;
+            height: 20px;
+            position: relative;
+            display: inline-block;
         }
 
-        .nav-right span:hover {
-            opacity: 0.6;
+        .heart-icon {
+            width: 20px;
+            height: 18px;
+            position: relative;
+        }
+
+        .heart-icon::before,
+        .heart-icon::after {
+            content: '';
+            position: absolute;
+            width: 10px;
+            height: 16px;
+            border: 2px solid currentColor;
+            border-radius: 10px 10px 0 0;
+            top: 0;
+        }
+
+        .heart-icon::before {
+            left: 0;
+            transform: rotate(-45deg);
+            transform-origin: 100% 100%;
+        }
+
+        .heart-icon::after {
+            right: 0;
+            transform: rotate(45deg);
+            transform-origin: 0 100%;
+        }
+
+        .user-icon {
+            width: 20px;
+            height: 20px;
+            border: 2px solid currentColor;
+            border-radius: 50%;
+            position: relative;
+        }
+
+        .user-icon::after {
+            content: '';
+            position: absolute;
+            width: 26px;
+            height: 12px;
+            border: 2px solid currentColor;
+            border-radius: 0 0 50% 50%;
+            border-top: none;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .cart-icon {
+            width: 22px;
+            height: 20px;
+            position: relative;
+        }
+
+        .cart-icon::before {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 18px;
+            border: 2px solid currentColor;
+            border-radius: 3px;
+            top: 2px;
+        }
+
+        .cart-icon::after {
+            content: '';
+            position: absolute;
+            width: 10px;
+            height: 8px;
+            border: 2px solid currentColor;
+            border-bottom: none;
+            border-radius: 8px 8px 0 0;
+            top: -2px;
+            left: 6px;
         }
 
         /* Hero Section */
@@ -389,12 +480,12 @@
 
         @media (max-width: 1024px) {
             nav {
-                padding: 20px 25px;
+                padding: 20px 30px;
             }
 
             .logo {
                 position: relative;
-                left: 0;
+                left: auto;
                 transform: none;
                 font-size: 16px;
                 letter-spacing: 4px;
@@ -405,24 +496,11 @@
             }
 
             .nav-right {
-                gap: 15px;
+                gap: 20px;
             }
 
-            .menu-icon, .search-icon {
-                font-size: 11px;
-            }
-
-            .nav-right span {
-                font-size: 16px;
-            }
-
-            .hero-content {
-                left: 25px;
-                bottom: 60px;
-            }
-
-            .hero-title {
-                font-size: 36px;
+            .contact-link {
+                display: none;
             }
 
             .split-section {
@@ -431,7 +509,90 @@
             }
 
             .split-item {
-                height: 70vh;
+                height: 60vh;
+            }
+
+            .product-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .feature-title {
+                font-size: 42px;
+            }
+
+            .nav-left, .menu-icon, .search-icon {
+                font-size: 11px;
+            }
+        }
+
+        @media (max-width: 640px) {
+            nav {
+                padding: 15px 20px;
+                flex-wrap: wrap;
+                gap: 15px;
+            }
+
+            .logo {
+                font-size: 14px;
+                letter-spacing: 3px;
+            }
+
+            .nav-left {
+                order: 2;
+                flex: 1;
+            }
+
+            .nav-right {
+                order: 3;
+                gap: 15px;
+            }
+
+            .icon {
+                width: 18px;
+                height: 18px;
+            }
+
+            .user-icon {
+                width: 18px;
+                height: 18px;
+            }
+
+            .user-icon::after {
+                width: 22px;
+                bottom: -8px;
+            }
+
+            .cart-icon {
+                width: 20px;
+                height: 18px;
+            }
+
+            .heart-icon {
+                width: 18px;
+                height: 16px;
+            }
+
+            .heart-icon::before,
+            .heart-icon::after {
+                width: 9px;
+                height: 14px;
+            }
+
+            .hero-content {
+                left: 30px;
+                bottom: 60px;
+            }
+
+            .hero-title {
+                font-size: 36px;
+            }
+
+            .split-item {
+                height: 50vh;
             }
 
             .split-content {
@@ -439,77 +600,21 @@
                 bottom: 40px;
             }
 
-            .split-label {
-                font-size: 32px;
+            .feature-title {
+                font-size: 36px;
             }
 
-            .product-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .product-item {
-                aspect-ratio: 4/5;
+            .feature-cta {
+                padding: 15px 40px;
             }
 
             .footer-content {
                 grid-template-columns: 1fr;
                 gap: 40px;
-                padding: 0 25px;
-            }
-
-            .footer-brand {
-                margin-bottom: 20px;
-            }
-
-            .feature-title {
-                font-size: 42px;
-                letter-spacing: 2px;
-            }
-
-            .feature-desc {
-                font-size: 12px;
             }
 
             footer {
-                padding: 60px 25px 30px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            nav {
-                flex-direction: column;
-                gap: 15px;
-                padding: 15px 20px;
-                align-items: flex-start;
-            }
-
-            .logo {
-                order: -1;
-                margin-bottom: 10px;
-            }
-
-            .nav-left {
-                order: 1;
-            }
-
-            .nav-right {
-                order: 2;
-                position: absolute;
-                top: 20px;
-                right: 20px;
-            }
-
-            .hero-title {
-                font-size: 28px;
-            }
-
-            .feature-title {
-                font-size: 32px;
-            }
-
-            .feature-cta {
-                padding: 15px 40px;
-                font-size: 11px;
+                padding: 60px 30px 30px;
             }
         }
     </style>
@@ -522,10 +627,16 @@
         </div>
         <div class="logo">VULIYAGA</div>
         <div class="nav-right">
-            <span>Contact Us</span>
-            <span>♡</span>
-            <span>👤</span>
-            <span>🛍</span>
+            <a href="#contact" class="contact-link">Contact Us</a>
+            <a href="#wishlist">
+                <span class="icon heart-icon"></span>
+            </a>
+            <a href="#account">
+                <span class="icon user-icon"></span>
+            </a>
+            <a href="#cart">
+                <span class="icon cart-icon"></span>
+            </a>
         </div>
     </nav>
 
