@@ -53,13 +53,13 @@
     .nav-inner{ width:100%; display:grid; grid-template-columns: auto 1fr auto; align-items:center; gap:16px; padding: 0 28px; }
 .nav-left{ justify-self:start; }
 .nav-right{ justify-self:end; }
-.brand{ justify-self:center; }
+.brand{ letter-spacing: .6rem; font-size: 15px; font-weight:600; text-align:center; }
+@media (max-width:640px){ .brand{ font-size:14px; letter-spacing:.45rem; } }
 @media (max-width:640px){ .nav-inner{ padding: 0 12px; gap:8px; grid-template-columns: auto 1fr auto; } }
 @media (max-width:640px){ .nav-inner{ padding: 0 14px; } }
     .nav-left,.nav-right{ display:flex; align-items:center; gap:18px; }
 @media (max-width:640px){ .nav-left,.nav-right{ gap:12px; } }
-    .brand{ letter-spacing: .6rem; font-size: 15px; font-weight:600; text-align:center; }
-@media (max-width:640px){ .brand{ font-size:14px; letter-spacing:.45rem; } }
+    .brand{ position:absolute; left:50%; transform: translateX(-50%); letter-spacing: .6rem; font-size: 15px; font-weight:600; }
 @media (max-width:640px){ .brand{ position:static; transform:none; font-size:14px; letter-spacing:.45rem; } }
     .icon{ width:22px; height:22px; display:inline-block; line-height:0; }
 @media (max-width:640px){ .icon{ width:20px; height:20px; } }
@@ -180,9 +180,20 @@
 }
 /* Hard mobile centering fixes */
 @media (max-width:640px){
-  /* keep left + right edges balanced so brand is visually centered */
-  .nav-left{ min-width: 100px; }
-  .nav-right{ min-width: 100px; justify-content:flex-end; }
+  /* Left = hamburger only, Right = heart only. Keep widths equal so brand is perfectly centered */
+  .nav-left, .nav-right{ width:56px; justify-content:center; }
+  /* Hide everything except heart on the right; hide search in header */
+  #btnSearch{ display:none !important; }
+  .nav-right [aria-label="Account"],
+  .nav-right [aria-label="Shopping cart"],
+  .contact{ display:none !important; }
+  /* Smaller tap target padding but still comfy */
+  .btn-ghost{ padding:.4rem; min-height:40px; }
+  /* Center hero text and button */
+  .hero-content{ padding: 14vh 12px 10vh; text-align:center; }
+  .hero-content .eyebrow{ margin-left:auto; margin-right:auto; }
+  .hero-content .h1{ margin-left:auto; margin-right:auto; }
+  .hero-content .cta{ margin-left:auto; margin-right:auto; }
 }
 </style>
 </head>
