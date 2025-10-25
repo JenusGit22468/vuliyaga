@@ -1,798 +1,330 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VULIYAGA</title>
-    <style>
-        :root { --nav-h: 68px; }
-        @media (max-width: 640px){ :root { --nav-h: 56px; } }
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Helvetica Neue', -apple-system, sans-serif;
-            color: #fff;
-            background: #000;
-            overflow-x: hidden;
-            padding-top: var(--nav-h);
-        }
-
-        /* Navigation */
-        nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 1000;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 50px;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-        }
-
-        .nav-left {
-            display: flex;
-            gap: 30px;
-            align-items: center;
-        }
-
-        .menu-icon, .search-icon {
-            cursor: pointer;
-            color: #fff;
-            transition: opacity 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            background: transparent;
-            border: 0;
-            font-size: 12px;
-        }
-
-        .menu-icon::before {
-            content: '≡';
-            font-size: 20px;
-            font-weight: 300;
-        }
-
-        .search-icon::before {
-            content: '⌕';
-            font-size: 18px;
-            font-weight: 300;
-        }
-
-        .menu-icon:hover, .search-icon:hover {
-            opacity: 0.6;
-        }
-
-        .logo {
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 16px;
-            font-weight: 500;
-            letter-spacing: 6px;
-            color: #fff;
-        }
-
-        .nav-right {
-            display: flex;
-            gap: 20px;
-            align-items: center;
-        }
-
-        .nav-right a {
-            cursor: pointer;
-            transition: opacity 0.3s;
-            text-decoration: none;
-            color: #fff;
-            font-size: 12px;
-            position: relative;
-            display: inline-flex;
-            align-items: center;
-        }
-
-        .nav-right a:hover {
-            opacity: 0.6;
-        }
-
-        .contact-link {
-            font-size: 12px;
-        }
-
-        /* Icon styles */
-        .icon {
-            width: 22px;
-            height: 22px;
-            display: inline-block;
-            line-height: 0;
-            position: relative;
-        }
-
-        .heart-icon {
-            width: 22px;
-            height: 20px;
-            position: relative;
-        }
-
-        .heart-icon::before,
-        .heart-icon::after {
-            content: '';
-            position: absolute;
-            width: 11px;
-            height: 18px;
-            border: 1.5px solid currentColor;
-            border-radius: 11px 11px 0 0;
-            top: 0;
-        }
-
-        .heart-icon::before {
-            left: 0;
-            transform: rotate(-45deg);
-            transform-origin: 100% 100%;
-        }
-
-        .heart-icon::after {
-            right: 0;
-            transform: rotate(45deg);
-            transform-origin: 0 100%;
-        }
-
-        .user-icon {
-            width: 22px;
-            height: 22px;
-            position: relative;
-        }
-
-        .user-icon::before {
-            content: '';
-            position: absolute;
-            width: 9px;
-            height: 9px;
-            background: currentColor;
-            border-radius: 50%;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-
-        .user-icon::after {
-            content: '';
-            position: absolute;
-            width: 22px;
-            height: 13px;
-            background: currentColor;
-            border-radius: 11px 11px 0 0;
-            bottom: 0;
-            left: 0;
-        }
-
-        .cart-icon {
-            width: 22px;
-            height: 22px;
-            position: relative;
-        }
-
-        .cart-icon::before {
-            content: '';
-            position: absolute;
-            width: 20px;
-            height: 18px;
-            border: 1.5px solid currentColor;
-            border-radius: 2px;
-            top: 4px;
-        }
-
-        .cart-icon::after {
-            content: '';
-            position: absolute;
-            width: 10px;
-            height: 8px;
-            border: 1.5px solid currentColor;
-            border-bottom: none;
-            border-radius: 8px 8px 0 0;
-            top: 0;
-            left: 6px;
-        }
-
-        .cart-link {
-            position: relative;
-        }
-
-        .cart-count {
-            position: absolute;
-            top: -6px;
-            right: -8px;
-            background: #fff;
-            color: #000;
-            font-size: 9px;
-            font-weight: 700;
-            min-width: 16px;
-            height: 16px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0 4px;
-        }
-
-        /* Accessibility */
-        a:focus-visible, button:focus-visible {
-            outline: 2px solid #c79739;
-            outline-offset: 2px;
-        }
-
-        /* Hero Section */
-        .hero {
-            height: 100vh;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero-image {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            background: linear-gradient(135deg, #2a1f1a 0%, #1a1410 100%);
-        }
-
-        .hero-overlay {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(180deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.4) 100%);
-        }
-
-        .hero-content {
-            position: absolute;
-            bottom: 80px;
-            left: 50px;
-            color: #fff;
-        }
-
-        .hero-label {
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 15px;
-            opacity: 0.8;
-        }
-
-        .hero-title {
-            font-size: 48px;
-            font-weight: 300;
-            letter-spacing: 2px;
-            margin-bottom: 25px;
-        }
-
-        .hero-cta {
-            color: #fff;
-            text-decoration: none;
-            font-size: 13px;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            padding-bottom: 5px;
-            border-bottom: 1px solid #fff;
-            display: inline-block;
-            transition: opacity 0.3s;
-        }
-
-        .hero-cta:hover {
-            opacity: 0.6;
-        }
-
-        /* Split Section */
-        .split-section {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            height: 100vh;
-        }
-
-        .split-item {
-            position: relative;
-            overflow: hidden;
-            cursor: pointer;
-        }
-
-        .split-bg {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
-            background: linear-gradient(135deg, #2a1f1a 0%, #3d2817 100%);
-        }
-
-        .split-item:hover .split-bg {
-            transform: scale(1.05);
-        }
-
-        .split-overlay {
-            position: absolute;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.2);
-            transition: background 0.3s;
-        }
-
-        .split-item:hover .split-overlay {
-            background: rgba(0, 0, 0, 0.1);
-        }
-
-        .split-content {
-            position: absolute;
-            bottom: 60px;
-            left: 60px;
-            color: #fff;
-        }
-
-        .split-label {
-            font-size: 28px;
-            font-weight: 300;
-            letter-spacing: 1px;
-            margin-bottom: 15px;
-        }
-
-        .split-cta {
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            color: #fff;
-            text-decoration: none;
-            border-bottom: 1px solid #fff;
-            padding-bottom: 3px;
-            display: inline-block;
-            transition: opacity 0.3s;
-        }
-
-        .split-cta:hover {
-            opacity: 0.6;
-        }
-
-        /* Full Width Feature */
-        .feature-section {
-            height: 90vh;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .feature-bg {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            background: linear-gradient(135deg, #1a1410 0%, #2d1f15 100%);
-        }
-
-        .feature-overlay {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(90deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.2) 100%);
-        }
-
-        .feature-content {
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            text-align: center;
-            color: #fff;
-        }
-
-        .feature-title {
-            font-size: 64px;
-            font-weight: 300;
-            letter-spacing: 4px;
-            margin-bottom: 30px;
-        }
-
-        .feature-desc {
-            font-size: 14px;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            opacity: 0.9;
-            margin-bottom: 40px;
-        }
-
-        .feature-cta {
-            display: inline-block;
-            padding: 18px 50px;
-            border: 1px solid #fff;
-            color: #fff;
-            text-decoration: none;
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            transition: all 0.3s;
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-        }
-
-        .feature-cta:hover {
-            background: rgba(255, 255, 255, 0.15);
-        }
-
-        /* Product Grid */
-        .product-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            background: #000;
-        }
-
-        .product-item {
-            aspect-ratio: 3/4;
-            position: relative;
-            overflow: hidden;
-            cursor: pointer;
-        }
-
-        .product-bg {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .product-item:nth-child(1) .product-bg {
-            background: linear-gradient(135deg, #3d2817 0%, #2a1f1a 100%);
-        }
-
-        .product-item:nth-child(2) .product-bg {
-            background: linear-gradient(135deg, #2d1f15 0%, #1a1410 100%);
-        }
-
-        .product-item:nth-child(3) .product-bg {
-            background: linear-gradient(135deg, #1a1410 0%, #0d0a08 100%);
-        }
-
-        .product-item:hover .product-bg {
-            transform: scale(1.08);
-        }
-
-        .product-info {
-            position: absolute;
-            bottom: 30px;
-            left: 30px;
-            color: #fff;
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-
-        .product-item:hover .product-info {
-            opacity: 1;
-        }
-
-        .product-name {
-            font-size: 18px;
-            font-weight: 300;
-            letter-spacing: 1px;
-            margin-bottom: 8px;
-        }
-
-        .product-price {
-            font-size: 14px;
-            letter-spacing: 1px;
-        }
-
-        /* Footer */
-        footer {
-            background: #000;
-            padding: 80px 50px 40px;
-            border-top: 1px solid #222;
-        }
-
-        .footer-content {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1fr;
-            gap: 60px;
-            max-width: 1400px;
-            margin: 0 auto 60px;
-        }
-
-        .footer-brand {
-            font-size: 22px;
-            font-weight: 300;
-            letter-spacing: 6px;
-            color: #c79739;
-        }
-
-        .footer-section h4 {
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 20px;
-            color: rgba(255, 255, 255, 0.5);
-            font-weight: 400;
-        }
-
-        .footer-section ul {
-            list-style: none;
-        }
-
-        .footer-section li {
-            margin-bottom: 12px;
-        }
-
-        .footer-section a {
-            color: rgba(255, 255, 255, 0.7);
-            text-decoration: none;
-            font-size: 13px;
-            transition: color 0.3s;
-        }
-
-        .footer-section a:hover {
-            color: #fff;
-        }
-
-        .footer-bottom {
-            text-align: center;
-            padding-top: 40px;
-            border-top: 1px solid #222;
-            color: rgba(255, 255, 255, 0.4);
-            font-size: 11px;
-            letter-spacing: 1px;
-        }
-
-        @media (max-width: 1024px) {
-            nav {
-                padding: 20px 30px;
-            }
-
-            .logo {
-                position: relative;
-                left: auto;
-                transform: none;
-                font-size: 16px;
-                letter-spacing: 4px;
-            }
-
-            .nav-left {
-                gap: 20px;
-            }
-
-            .nav-right {
-                gap: 20px;
-            }
-
-            .contact-link {
-                display: none;
-            }
-
-            .split-section {
-                grid-template-columns: 1fr;
-                height: auto;
-            }
-
-            .split-item {
-                height: 60vh;
-            }
-
-            .product-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .footer-content {
-                grid-template-columns: 1fr 1fr;
-            }
-
-            .feature-title {
-                font-size: 42px;
-            }
-
-            .nav-left, .menu-icon, .search-icon {
-                font-size: 11px;
-            }
-        }
-
-        @media (max-width: 640px) {
-            nav {
-                padding: 15px 20px;
-                flex-wrap: wrap;
-                gap: 15px;
-            }
-
-            .logo {
-                font-size: 14px;
-                letter-spacing: 3px;
-            }
-
-            .nav-left {
-                order: 2;
-                flex: 1;
-            }
-
-            .nav-right {
-                order: 3;
-                gap: 15px;
-            }
-
-            .icon {
-                width: 18px;
-                height: 18px;
-            }
-
-            .user-icon {
-                width: 18px;
-                height: 18px;
-            }
-
-            .user-icon::after {
-                width: 22px;
-                bottom: -8px;
-            }
-
-            .cart-icon {
-                width: 20px;
-                height: 18px;
-            }
-
-            .heart-icon {
-                width: 18px;
-                height: 16px;
-            }
-
-            .heart-icon::before,
-            .heart-icon::after {
-                width: 9px;
-                height: 14px;
-            }
-
-            .hero-content {
-                left: 30px;
-                bottom: 60px;
-            }
-
-            .hero-title {
-                font-size: 36px;
-            }
-
-            .split-item {
-                height: 50vh;
-            }
-
-            .split-content {
-                left: 30px;
-                bottom: 40px;
-            }
-
-            .feature-title {
-                font-size: 36px;
-            }
-
-            .feature-cta {
-                padding: 15px 40px;
-            }
-
-            .footer-content {
-                grid-template-columns: 1fr;
-                gap: 40px;
-            }
-
-            footer {
-                padding: 60px 30px 30px;
-            }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>VULIYAGA</title>
+  <!-- Icons -->
+  <script src="https://unpkg.com/lucide@latest" defer></script>
+  <style>
+    :root{
+      --bg: #0a0a0a;
+      --bg-soft: #111;
+      --text: #fff;
+      --muted: rgba(255,255,255,.65);
+      --accent: #caa256; /* warm gold */
+      --nav-h: 72px;
+      --radius: 16px;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+    }
+    @media (max-width: 640px){ :root{ --nav-h: 60px; } }
+
+    /* Reset */
+    *,*::before,*::after{ box-sizing: border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0; color:var(--text); background:var(--bg);
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      letter-spacing:.2px; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
+      padding-top: var(--nav-h);
+    }
+    a{ color:inherit; text-decoration:none; }
+    button{ font: inherit; color: inherit; background: transparent; border: 0; }
+    img{ display:block; max-width:100%; height:auto; }
+
+    /* Utility */
+    .container{ max-width: 1400px; margin: 0 auto; padding: 0 24px; }
+    .visually-hidden{ position:absolute; clip:rect(0 0 0 0); clip-path: inset(50%); height:1px; width:1px; overflow:hidden; white-space:nowrap; }
+    .btn-ghost{ display:inline-flex; align-items:center; gap:.6rem; padding:.35rem .5rem; border-radius: 999px; transition: opacity .25s ease; }
+    .btn-ghost:hover{ opacity:.6 }
+    .badge{ display:inline-flex; align-items:center; justify-content:center; min-width:18px; height:18px; padding:0 5px; font-size:10px; font-weight:700; color:#000; background:#fff; border-radius:999px; position:absolute; top:-6px; right:-8px; }
+    .gold{ color: var(--accent); }
+
+    /* Nav */
+    .nav{
+      position:fixed; inset:0 0 auto 0; height:var(--nav-h); z-index:1000;
+      display:flex; align-items:center; backdrop-filter: blur(18px);
+      background: linear-gradient(180deg, rgba(0,0,0,.65), rgba(0,0,0,.35));
+      border-bottom: 1px solid rgba(255,255,255,.06);
+    }
+    .nav-inner{ width:100%; display:flex; align-items:center; justify-content:space-between; gap:16px; padding: 0 28px; }
+    .nav-left,.nav-right{ display:flex; align-items:center; gap:22px; }
+    .brand{ position:absolute; left:50%; transform: translateX(-50%); letter-spacing: .6rem; font-size: 15px; font-weight:600; }
+    .icon{ width:22px; height:22px; display:inline-block; line-height:0; }
+    .icon svg{ width:100%; height:100%; stroke: currentColor; stroke-width: 1.5; }
+    .contact{ font-size:12px; color:var(--muted); }
+
+    /* Hero */
+    .hero{ position:relative; min-height: calc(100vh - var(--nav-h)); isolation:isolate; }
+    .hero-media{ position:absolute; inset:0; overflow:hidden; }
+    .hero-media::before{
+      content:""; position:absolute; inset:0;
+      background: radial-gradient(1200px 700px at 20% 20%, rgba(202,162,86,.18), transparent 60%),
+                  radial-gradient(1100px 700px at 90% 10%, rgba(255,255,255,.06), transparent 60%),
+                  linear-gradient(0deg, rgba(0,0,0,.55), rgba(0,0,0,.55));
+      z-index:1;
+    }
+    .hero-bg{ position:absolute; inset:0; background:
+      linear-gradient(135deg,#2a1f1a, #0f0d0b);
+      transform: scale(1.02);
+    }
+    .hero-content{ position:relative; z-index:2; padding: 22vh 0 14vh; }
+    .eyebrow{ font-size:11px; letter-spacing: .25rem; text-transform:uppercase; color: var(--muted); margin-bottom:16px; }
+    .h1{ font-size: clamp(36px, 6vw, 72px); font-weight:300; letter-spacing:.08rem; margin:0 0 22px; }
+    .cta{ display:inline-block; padding:14px 26px; border:1px solid rgba(255,255,255,.6); border-radius:999px; font-size:12px; letter-spacing:.18rem; text-transform:uppercase; transition: all .25s ease; }
+    .cta:hover{ background: rgba(255,255,255,.12); border-color:#fff; }
+
+    /* Split banners */
+    .splits{ display:grid; grid-template-columns: 1fr 1fr; }
+    .tile{ position:relative; height: 68vh; overflow:hidden; }
+    .tile .bg{ position:absolute; inset:0; background-size:cover; background-position:center; transform: scale(1.02); transition: transform .8s cubic-bezier(.2,.7,.2,1); }
+    .tile:hover .bg{ transform: scale(1.08); }
+    .tile::after{ content:""; position:absolute; inset:0; background: linear-gradient(180deg, rgba(0,0,0,.1), rgba(0,0,0,.4)); }
+    .tile-content{ position:absolute; left:7%; bottom:9%; z-index:1; }
+    .tile h3{ font-size: clamp(24px,3.3vw,36px); font-weight:300; margin:0 0 10px; }
+    .link-underline{ font-size:12px; letter-spacing:.18rem; text-transform:uppercase; border-bottom:1px solid currentColor; padding-bottom:4px; }
+
+    /* Feature */
+    .feature{ position:relative; height: 86vh; display:grid; place-items:center; text-align:center; }
+    .feature .bg{ position:absolute; inset:0; background: linear-gradient(135deg,#1a1410,#2d1f15); }
+    .feature .veil{ position:absolute; inset:0; background: radial-gradient(800px 600px at 50% 55%, rgba(202,162,86,.08), transparent 60%), linear-gradient(0deg, rgba(0,0,0,.35), rgba(0,0,0,.35)); }
+    .feature h2{ font-size: clamp(34px,5.2vw,64px); font-weight:300; letter-spacing:.4rem; margin: 0 0 10px; }
+    .feature p{ color: var(--muted); letter-spacing:.24rem; text-transform:uppercase; margin: 0 0 28px; font-size:12px; }
+
+    /* Product grid */
+    .grid{ display:grid; grid-template-columns: repeat(3,1fr); }
+    .card{ position:relative; aspect-ratio: 3/4; overflow:hidden; }
+    .card .ph{ position:absolute; inset:0; background: linear-gradient(135deg,#3d2817,#1a1410); transform: scale(1.02); transition: transform .7s cubic-bezier(.2,.7,.2,1); }
+    .card:hover .ph{ transform: scale(1.08); }
+    .meta{ position:absolute; left:24px; bottom:24px; opacity:0; transition: opacity .25s ease; }
+    .card:hover .meta{ opacity:1; }
+    .meta .name{ font-weight:300; letter-spacing:.04rem; font-size:17px; margin-bottom:6px; }
+    .meta .price{ font-size:13px; letter-spacing:.04rem; color: var(--muted); }
+
+    /* Footer */
+    footer{ border-top:1px solid rgba(255,255,255,.08); background: var(--bg); }
+    .footer-top{ padding: 80px 0 44px; }
+    .cols{ display:grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 56px; }
+    .brandmark{ font-size:22px; letter-spacing:.6rem; font-weight:300; color: var(--accent); }
+    .fh{ font-size:12px; letter-spacing:.22rem; text-transform:uppercase; color: var(--muted); margin: 0 0 16px; }
+    .flink{ display:block; padding:6px 0; color: rgba(255,255,255,.78); font-size:13px; }
+    .flink:hover{ color:#fff }
+    .footer-bottom{ border-top:1px solid rgba(255,255,255,.08); text-align:center; padding: 22px 0 40px; color: var(--muted); font-size:12px; letter-spacing:.12rem; }
+
+    /* Responsiveness */
+    @media (max-width: 1100px){ .cols{ grid-template-columns: 1.3fr 1fr 1fr; } }
+    @media (max-width: 960px){
+      .grid{ grid-template-columns: 1fr 1fr; }
+      .splits{ grid-template-columns: 1fr; }
+      .tile{ height: 58vh; }
+      .brand{ position:static; transform:none; }
+      .nav-inner{ padding: 0 20px; }
+    }
+    @media (max-width: 640px){
+      .grid{ grid-template-columns: 1fr; }
+      .footer-top{ padding: 64px 0 32px; }
+      .cols{ grid-template-columns: 1fr 1fr; gap:34px; }
+    }
+
+    /* Focus Ring */
+    a:focus-visible, button:focus-visible{ outline:2px solid var(--accent); outline-offset: 2px; border-radius: 8px; }
+
+    /* Small JS-driven states */
+    .nav.scrolled{ box-shadow: var(--shadow); background: rgba(0,0,0,.75); }
+
+    /* Overlays */
+    .overlay{ position: fixed; inset:0; z-index:1100; display:none; }
+    .overlay.active{ display:block; }
+    .scrim{ position:absolute; inset:0; background: rgba(0,0,0,.6); opacity:0; transition: opacity .25s ease; }
+    .overlay.active .scrim{ opacity:1; }
+    .panel{ position:absolute; right:0; top:0; width:min(520px, 92vw); height:100%; background: #0e0e0e; border-left:1px solid rgba(255,255,255,.08); transform: translateX(100%); transition: transform .3s ease; }
+    .overlay.active .panel{ transform: translateX(0); }
+    .panel-head{ display:flex; align-items:center; justify-content:space-between; padding:18px 20px; border-bottom:1px solid rgba(255,255,255,.08); }
+    .searchbar{ display:flex; align-items:center; gap:10px; padding:14px 16px; margin:14px 16px; border:1px solid rgba(255,255,255,.14); border-radius: 14px; background:#111; }
+    .searchbar input{ flex:1; background:transparent; border:0; outline:0; color:#fff; font-size:16px; }
+  </style>
 </head>
 <body>
-    <nav role="navigation" aria-label="Main">
-        <div class="nav-left">
-            <button class="menu-icon" aria-label="Open menu">Menu</button>
-            <button class="search-icon" aria-label="Search">Search</button>
-        </div>
-        <div class="logo" aria-label="VULIYAGA">VULIYAGA</div>
-        <div class="nav-right">
-            <a href="#contact" class="contact-link">Contact Us</a>
-            <a href="#wishlist" aria-label="Wishlist">
-                <span class="icon heart-icon"></span>
-            </a>
-            <a href="#account" aria-label="Account">
-                <span class="icon user-icon"></span>
-            </a>
-            <a href="#cart" class="cart-link" aria-label="Shopping cart">
-                <span class="icon cart-icon"></span>
-                <span class="cart-count">0</span>
-            </a>
-        </div>
-    </nav>
 
-    <section class="hero">
-        <div class="hero-image"></div>
-        <div class="hero-overlay"></div>
-        <div class="hero-content">
-            <div class="hero-label">New Collection</div>
-            <h1 class="hero-title">Winter Essentials</h1>
-            <a href="#" class="hero-cta">Discover Now</a>
-        </div>
-    </section>
+  <!-- NAVIGATION -->
+  <header class="nav" id="nav">
+    <div class="nav-inner container">
+      <div class="nav-left">
+        <button class="btn-ghost" id="btnMenu" aria-label="Open menu"><i class="icon" data-lucide="menu"></i><span class="label" style="font-size:12px">Menu</span></button>
+        <button class="btn-ghost" id="btnSearch" aria-label="Open search"><i class="icon" data-lucide="search"></i><span class="label" style="font-size:12px">Search</span></button>
+      </div>
 
-    <section class="split-section">
-        <div class="split-item">
-            <div class="split-bg"></div>
-            <div class="split-overlay"></div>
-            <div class="split-content">
-                <div class="split-label">Women</div>
-                <a href="#" class="split-cta">Shop Now</a>
-            </div>
-        </div>
-        <div class="split-item">
-            <div class="split-bg"></div>
-            <div class="split-overlay"></div>
-            <div class="split-content">
-                <div class="split-label">Men</div>
-                <a href="#" class="split-cta">Shop Now</a>
-            </div>
-        </div>
-    </section>
+      <a href="#" class="brand" aria-label="VULIYAGA">VULIYAGA</a>
 
-    <section class="feature-section">
-        <div class="feature-bg"></div>
-        <div class="feature-overlay"></div>
-        <div class="feature-content">
-            <h2 class="feature-title">VULIYAGA</h2>
-            <p class="feature-desc">Crafted for the Modern Individual</p>
-            <a href="#" class="feature-cta">Explore Collection</a>
-        </div>
-    </section>
+      <div class="nav-right">
+        <a href="#contact" class="contact">Contact Us</a>
+        <a href="#wishlist" class="btn-ghost" aria-label="Wishlist"><i class="icon" data-lucide="heart"></i></a>
+        <a href="#account" class="btn-ghost" aria-label="Account"><i class="icon" data-lucide="user"></i></a>
+        <a href="#cart" class="btn-ghost" aria-label="Shopping cart" style="position:relative"><i class="icon" data-lucide="shopping-bag"></i><span class="badge">0</span></a>
+      </div>
+    </div>
+  </header>
 
-    <section class="product-grid">
-        <div class="product-item">
-            <div class="product-bg"></div>
-            <div class="product-info">
-                <div class="product-name">Signature Coat</div>
-                <div class="product-price">$890</div>
-            </div>
-        </div>
-        <div class="product-item">
-            <div class="product-bg"></div>
-            <div class="product-info">
-                <div class="product-name">Leather Bag</div>
-                <div class="product-price">$1,200</div>
-            </div>
-        </div>
-        <div class="product-item">
-            <div class="product-bg"></div>
-            <div class="product-info">
-                <div class="product-name">Cashmere Scarf</div>
-                <div class="product-price">$420</div>
-            </div>
-        </div>
-    </section>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-media" aria-hidden="true">
+      <div class="hero-bg"></div>
+    </div>
+    <div class="container hero-content">
+      <div class="eyebrow">NEW COLLECTION</div>
+      <h1 class="h1">Winter Essentials</h1>
+      <a class="cta" href="#">Discover Now</a>
+    </div>
+  </section>
 
-    <footer>
-        <div class="footer-content">
-            <div class="footer-brand">VULIYAGA</div>
-            <div class="footer-section">
-                <h4>Client Services</h4>
-                <ul>
-                    <li><a href="#">Contact Us</a></li>
-                    <li><a href="#">My Orders</a></li>
-                    <li><a href="#">Shipping</a></li>
-                    <li><a href="#">Returns</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h4>The Company</h4>
-                <ul>
-                    <li><a href="#">About Us</a></li>
-                    <li><a href="#">Careers</a></li>
-                    <li><a href="#">Sustainability</a></li>
-                    <li><a href="#">Press</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h4>Connect</h4>
-                <ul>
-                    <li><a href="#">Instagram</a></li>
-                    <li><a href="#">Facebook</a></li>
-                    <li><a href="#">Twitter</a></li>
-                </ul>
-            </div>
+  <!-- SPLIT BANNERS -->
+  <section class="splits">
+    <article class="tile">
+      <div class="bg" style="background-image: linear-gradient(135deg,#2a1f1a,#3d2817);"></div>
+      <div class="tile-content">
+        <h3>Women</h3>
+        <a href="#" class="link-underline">Shop Now</a>
+      </div>
+    </article>
+    <article class="tile">
+      <div class="bg" style="background-image: linear-gradient(135deg,#2d1f15,#0f0d0b);"></div>
+      <div class="tile-content">
+        <h3>Men</h3>
+        <a href="#" class="link-underline">Shop Now</a>
+      </div>
+    </article>
+  </section>
+
+  <!-- FEATURED FULL WIDTH -->
+  <section class="feature">
+    <div class="bg" aria-hidden="true"></div>
+    <div class="veil" aria-hidden="true"></div>
+    <div class="container" style="position:relative; z-index:1;">
+      <h2>VULIYAGA</h2>
+      <p>Crafted for the Modern Individual</p>
+      <a href="#" class="cta">Explore Collection</a>
+    </div>
+  </section>
+
+  <!-- PRODUCTS GRID -->
+  <section class="grid">
+    <article class="card">
+      <div class="ph"></div>
+      <div class="meta">
+        <div class="name">Signature Coat</div>
+        <div class="price">$890</div>
+      </div>
+    </article>
+    <article class="card">
+      <div class="ph" style="background: linear-gradient(135deg,#2d1f15,#1a1410);"></div>
+      <div class="meta">
+        <div class="name">Leather Bag</div>
+        <div class="price">$1,200</div>
+      </div>
+    </article>
+    <article class="card">
+      <div class="ph" style="background: linear-gradient(135deg,#1a1410,#0d0a08);"></div>
+      <div class="meta">
+        <div class="name">Cashmere Scarf</div>
+        <div class="price">$420</div>
+      </div>
+    </article>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-top container">
+      <div class="cols">
+        <div>
+          <div class="brandmark">VULIYAGA</div>
         </div>
-        <div class="footer-bottom">
-            © 2025 VULIYAGA. All Rights Reserved.
+        <div>
+          <h4 class="fh">Client Services</h4>
+          <a class="flink" href="#">Contact Us</a>
+          <a class="flink" href="#">My Orders</a>
+          <a class="flink" href="#">Shipping</a>
+          <a class="flink" href="#">Returns</a>
         </div>
-    </footer>
+        <div>
+          <h4 class="fh">The Company</h4>
+          <a class="flink" href="#">About Us</a>
+          <a class="flink" href="#">Careers</a>
+          <a class="flink" href="#">Sustainability</a>
+          <a class="flink" href="#">Press</a>
+        </div>
+        <div>
+          <h4 class="fh">Connect</h4>
+          <a class="flink" href="#">Instagram</a>
+          <a class="flink" href="#">Facebook</a>
+          <a class="flink" href="#">Twitter</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2025 VULIYAGA. All Rights Reserved.</div>
+  </footer>
+
+  <!-- OVERLAYS: SEARCH & MENU (simple panels) -->
+  <div class="overlay" id="overlaySearch" aria-hidden="true">
+    <div class="scrim" data-close="search"></div>
+    <aside class="panel" role="dialog" aria-label="Search">
+      <div class="panel-head">
+        <strong>Search</strong>
+        <button class="btn-ghost" data-close="search" aria-label="Close search"><i class="icon" data-lucide="x"></i></button>
+      </div>
+      <div class="searchbar"><i class="icon" data-lucide="search"></i><input type="text" placeholder="Search products…" /></div>
+    </aside>
+  </div>
+
+  <div class="overlay" id="overlayMenu" aria-hidden="true">
+    <div class="scrim" data-close="menu"></div>
+    <aside class="panel" role="dialog" aria-label="Menu">
+      <div class="panel-head">
+        <strong>Menu</strong>
+        <button class="btn-ghost" data-close="menu" aria-label="Close menu"><i class="icon" data-lucide="x"></i></button>
+      </div>
+      <div style="padding: 18px 20px; display:grid; gap:12px;">
+        <a class="flink" href="#">Women</a>
+        <a class="flink" href="#">Men</a>
+        <a class="flink" href="#">Bags</a>
+        <a class="flink" href="#">Shoes</a>
+        <a class="flink" href="#">Accessories</a>
+      </div>
+    </aside>
+  </div>
+
+  <script>
+    // Initialize icons
+    window.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons({ attrs: { 'stroke-width': 1.5 } });
+    });
+
+    // Nav shadow on scroll
+    const nav = document.getElementById('nav');
+    const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 10);
+    window.addEventListener('scroll', onScroll, { passive:true });
+    onScroll();
+
+    // Simple overlays (search & menu)
+    const q = (s, r=document) => r.querySelector(s);
+    const search = q('#overlaySearch');
+    const menu = q('#overlayMenu');
+    const open = (el) => { el.classList.add('active'); el.setAttribute('aria-hidden','false'); };
+    const close = (el) => { el.classList.remove('active'); el.setAttribute('aria-hidden','true'); };
+
+    q('#btnSearch').addEventListener('click', () => open(search));
+    q('#btnMenu').addEventListener('click', () => open(menu));
+
+    document.addEventListener('click', (e) => {
+      const t = e.target.closest('[data-close]');
+      if(!t) return;
+      const which = t.dataset.close;
+      if(which === 'search') close(search);
+      if(which === 'menu') close(menu);
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if(e.key === 'Escape') { close(search); close(menu); }
+    });
+  </script>
 </body>
 </html>
