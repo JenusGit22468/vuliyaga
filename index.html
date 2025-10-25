@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VULIYAGA</title>
     <style>
+        :root { --nav-h: 68px; }
+        @media (max-width: 640px){ :root { --nav-h: 56px; } }
         * {
             margin: 0;
             padding: 0;
@@ -16,6 +18,7 @@
             color: #fff;
             background: #000;
             overflow-x: hidden;
+            padding-top: var(--nav-h);
         }
 
         /* Navigation */
@@ -27,8 +30,8 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 30px 50px;
-            background: rgba(0, 0, 0, 0.3);
+            padding: 20px 50px;
+            background: rgba(0, 0, 0, 0.8);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
         }
@@ -41,11 +44,26 @@
 
         .menu-icon, .search-icon {
             cursor: pointer;
-            font-size: 13px;
             color: #fff;
-            text-transform: uppercase;
-            letter-spacing: 1px;
             transition: opacity 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: transparent;
+            border: 0;
+            font-size: 12px;
+        }
+
+        .menu-icon::before {
+            content: '≡';
+            font-size: 20px;
+            font-weight: 300;
+        }
+
+        .search-icon::before {
+            content: '⌕';
+            font-size: 18px;
+            font-weight: 300;
         }
 
         .menu-icon:hover, .search-icon:hover {
@@ -56,15 +74,15 @@
             position: absolute;
             left: 50%;
             transform: translateX(-50%);
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 500;
-            letter-spacing: 8px;
+            letter-spacing: 6px;
             color: #fff;
         }
 
         .nav-right {
             display: flex;
-            gap: 25px;
+            gap: 20px;
             align-items: center;
         }
 
@@ -73,6 +91,10 @@
             transition: opacity 0.3s;
             text-decoration: none;
             color: #fff;
+            font-size: 12px;
+            position: relative;
+            display: inline-flex;
+            align-items: center;
         }
 
         .nav-right a:hover {
@@ -80,22 +102,21 @@
         }
 
         .contact-link {
-            font-size: 13px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            font-size: 12px;
         }
 
         /* Icon styles */
         .icon {
-            width: 20px;
-            height: 20px;
-            position: relative;
+            width: 22px;
+            height: 22px;
             display: inline-block;
+            line-height: 0;
+            position: relative;
         }
 
         .heart-icon {
-            width: 20px;
-            height: 18px;
+            width: 22px;
+            height: 20px;
             position: relative;
         }
 
@@ -103,10 +124,10 @@
         .heart-icon::after {
             content: '';
             position: absolute;
-            width: 10px;
-            height: 16px;
-            border: 2px solid currentColor;
-            border-radius: 10px 10px 0 0;
+            width: 11px;
+            height: 18px;
+            border: 1.5px solid currentColor;
+            border-radius: 11px 11px 0 0;
             top: 0;
         }
 
@@ -123,29 +144,37 @@
         }
 
         .user-icon {
-            width: 20px;
-            height: 20px;
-            border: 2px solid currentColor;
-            border-radius: 50%;
+            width: 22px;
+            height: 22px;
             position: relative;
+        }
+
+        .user-icon::before {
+            content: '';
+            position: absolute;
+            width: 9px;
+            height: 9px;
+            background: currentColor;
+            border-radius: 50%;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
         }
 
         .user-icon::after {
             content: '';
             position: absolute;
-            width: 26px;
-            height: 12px;
-            border: 2px solid currentColor;
-            border-radius: 0 0 50% 50%;
-            border-top: none;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
+            width: 22px;
+            height: 13px;
+            background: currentColor;
+            border-radius: 11px 11px 0 0;
+            bottom: 0;
+            left: 0;
         }
 
         .cart-icon {
             width: 22px;
-            height: 20px;
+            height: 22px;
             position: relative;
         }
 
@@ -154,9 +183,9 @@
             position: absolute;
             width: 20px;
             height: 18px;
-            border: 2px solid currentColor;
-            border-radius: 3px;
-            top: 2px;
+            border: 1.5px solid currentColor;
+            border-radius: 2px;
+            top: 4px;
         }
 
         .cart-icon::after {
@@ -164,11 +193,38 @@
             position: absolute;
             width: 10px;
             height: 8px;
-            border: 2px solid currentColor;
+            border: 1.5px solid currentColor;
             border-bottom: none;
             border-radius: 8px 8px 0 0;
-            top: -2px;
+            top: 0;
             left: 6px;
+        }
+
+        .cart-link {
+            position: relative;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -6px;
+            right: -8px;
+            background: #fff;
+            color: #000;
+            font-size: 9px;
+            font-weight: 700;
+            min-width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 4px;
+        }
+
+        /* Accessibility */
+        a:focus-visible, button:focus-visible {
+            outline: 2px solid #c79739;
+            outline-offset: 2px;
         }
 
         /* Hero Section */
@@ -620,22 +676,23 @@
     </style>
 </head>
 <body>
-    <nav>
+    <nav role="navigation" aria-label="Main">
         <div class="nav-left">
-            <div class="menu-icon">Menu</div>
-            <div class="search-icon">Search</div>
+            <button class="menu-icon" aria-label="Open menu">Menu</button>
+            <button class="search-icon" aria-label="Search">Search</button>
         </div>
-        <div class="logo">VULIYAGA</div>
+        <div class="logo" aria-label="VULIYAGA">VULIYAGA</div>
         <div class="nav-right">
             <a href="#contact" class="contact-link">Contact Us</a>
-            <a href="#wishlist">
+            <a href="#wishlist" aria-label="Wishlist">
                 <span class="icon heart-icon"></span>
             </a>
-            <a href="#account">
+            <a href="#account" aria-label="Account">
                 <span class="icon user-icon"></span>
             </a>
-            <a href="#cart">
+            <a href="#cart" class="cart-link" aria-label="Shopping cart">
                 <span class="icon cart-icon"></span>
+                <span class="cart-count">0</span>
             </a>
         </div>
     </nav>
