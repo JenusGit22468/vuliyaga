@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VULIYAGA</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a0a0a;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        .bg-gradient {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(125deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+        }
+
+        .bg-gradient::before {
+            content: '';
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(138, 43, 226, 0.15) 0%, transparent 70%);
+            top: -200px;
+            right: -200px;
+            animation: float1 20s ease-in-out infinite;
+        }
+
+        .bg-gradient::after {
+            content: '';
+            position: absolute;
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(255, 20, 147, 0.1) 0%, transparent 70%);
+            bottom: -300px;
+            left: -300px;
+            animation: float2 25s ease-in-out infinite;
+        }
+
+        @keyframes float1 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(100px, 100px) scale(1.1); }
+        }
+
+        @keyframes float2 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(-100px, -100px) scale(1.2); }
+        }
+
+        /* Glass Nav */
+        nav {
+            position: fixed;
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            width: 90%;
+            max-width: 1200px;
+            padding: 20px 40px;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 100px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: 3px;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 50px;
+            list-style: none;
+        }
+
+        .nav-menu a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: #fff;
+            transition: width 0.3s;
+        }
+
+        .nav-menu a:hover {
+            color: #fff;
+        }
+
+        .nav-menu a:hover::after {
+            width: 100%;
+        }
+
+        .nav-icons {
+            display: flex;
+            gap: 25px;
+            font-size: 18px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .nav-icons span {
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .nav-icons span:hover {
+            color: #fff;
+            transform: scale(1.1);
+        }
+
+        /* Hero */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 10;
+        }
+
+        .hero h1 {
+            font-size: clamp(60px, 10vw, 140px);
+            font-weight: 700;
+            letter-spacing: -4px;
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, #fff 0%, rgba(255,255,255,0.5) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: rgba(255, 255, 255, 0.6);
+            font-weight: 300;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-bottom: 50px;
+        }
+
+        .cta {
+            display: inline-block;
+            padding: 20px 60px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50px;
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 14px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transition: all 0.4s;
+        }
+
+        .cta:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-5px);
+            box-shadow: 0 20px 60px rgba(138, 43, 226, 0.3);
+        }
+
+        /* Collection Grid */
+        .collection {
+            padding: 150px 60px;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+        }
+
+        .card {
+            position: relative;
+            height: 600px;
+            border-radius: 30px;
+            overflow: hidden;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(138, 43, 226, 0.3) 0%, rgba(255, 20, 147, 0.2) 100%);
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        .card:hover {
+            transform: scale(1.02);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .card:nth-child(1) {
+            grid-column: span 2;
+            height: 700px;
+            background: radial-gradient(circle at 30% 50%, rgba(138, 43, 226, 0.1) 0%, transparent 50%),
+                        linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        }
+
+        .card:nth-child(2) {
+            background: radial-gradient(circle at 70% 30%, rgba(255, 20, 147, 0.15) 0%, transparent 50%),
+                        linear-gradient(135deg, #16213e 0%, #0f3460 100%);
+        }
+
+        .card:nth-child(3) {
+            background: radial-gradient(circle at 40% 70%, rgba(138, 43, 226, 0.12) 0%, transparent 50%),
+                        linear-gradient(135deg, #0f3460 0%, #1a1a2e 100%);
+        }
+
+        .card-content {
+            position: absolute;
+            bottom: 50px;
+            left: 50px;
+            z-index: 10;
+        }
+
+        .card-content h3 {
+            font-size: 42px;
+            font-weight: 700;
+            letter-spacing: -1px;
+            margin-bottom: 10px;
+        }
+
+        .card-content p {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.6);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* Featured Product */
+        .featured {
+            padding: 150px 60px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .featured-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 100px;
+            align-items: center;
+        }
+
+        .featured-image {
+            height: 700px;
+            border-radius: 30px;
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .featured-image::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(138, 43, 226, 0.2) 0%, transparent 70%);
+        }
+
+        .featured-text h2 {
+            font-size: 64px;
+            font-weight: 700;
+            letter-spacing: -2px;
+            margin-bottom: 30px;
+        }
+
+        .featured-text p {
+            font-size: 16px;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 40px;
+        }
+
+        .price {
+            font-size: 32px;
+            font-weight: 600;
+            margin-bottom: 40px;
+        }
+
+        /* Footer */
+        footer {
+            margin-top: 200px;
+            padding: 80px 60px 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 60px;
+            margin-bottom: 60px;
+        }
+
+        .footer-brand h3 {
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            margin-bottom: 20px;
+        }
+
+        .footer-brand p {
+            color: rgba(255, 255, 255, 0.4);
+            line-height: 1.6;
+        }
+
+        .footer-section h4 {
+            font-size: 12px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.4);
+            margin-bottom: 20px;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 12px;
+        }
+
+        .footer-section a {
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: #fff;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            color: rgba(255, 255, 255, 0.3);
+            font-size: 12px;
+            letter-spacing: 1px;
+        }
+
+        @media (max-width: 1024px) {
+            nav {
+                width: 95%;
+                padding: 15px 30px;
+            }
+
+            .nav-menu {
+                display: none;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .card:nth-child(1) {
+                grid-column: span 1;
+            }
+
+            .featured-content {
+                grid-template-columns: 1fr;
+                gap: 50px;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr 1fr;
+                gap: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-gradient"></div>
+
+    <nav>
+        <div class="logo">VULIYAGA</div>
+        <ul class="nav-menu">
+            <li><a href="#collection">Collection</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+        <div class="nav-icons">
+            <span>⌕</span>
+            <span>◯</span>
+            <span>⊞</span>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>VULIYAGA</h1>
+            <p>Redefining Modern Luxury</p>
+            <a href="#collection" class="cta">Explore</a>
+        </div>
+    </section>
+
+    <section class="collection" id="collection">
+        <div class="grid">
+            <div class="card">
+                <div class="card-content">
+                    <h3>Winter Collection</h3>
+                    <p>2025</p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-content">
+                    <h3>Essentials</h3>
+                    <p>Timeless</p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-content">
+                    <h3>Limited Edition</h3>
+                    <p>Exclusive</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="featured">
+        <div class="featured-content">
+            <div class="featured-image"></div>
+            <div class="featured-text">
+                <h2>Signature Piece</h2>
+                <p>Crafted from premium materials with meticulous attention to detail. This piece represents the intersection of contemporary design and timeless elegance.</p>
+                <div class="price">$320</div>
+                <a href="#" class="cta">Add to Cart</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <h3>VULIYAGA</h3>
+                <p>Elevated clothing for the modern individual. Where craftsmanship meets innovation.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Shop</h4>
+                <ul>
+                    <li><a href="#">New Arrivals</a></li>
+                    <li><a href="#">Collections</a></li>
+                    <li><a href="#">Archive</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Company</h4>
+                <ul>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Sustainability</a></li>
+                    <li><a href="#">Careers</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Support</h4>
+                <ul>
+                    <li><a href="#">Contact</a></li>
+                    <li><a href="#">Shipping</a></li>
+                    <li><a href="#">Returns</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2025 VULIYAGA. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
